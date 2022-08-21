@@ -40,7 +40,7 @@ jobs:
         - run:
             name: smoke_test
             command: |
-              URL="http://44.202.66.86"
+              URL="http://44.202.67.86"
               if curl -s --head ${URL}
               then
                 return 0
