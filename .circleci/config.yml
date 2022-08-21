@@ -31,7 +31,7 @@ jobs:
         - run:
             name: configure deployed server
             command: |
-              ansible-playbook -i inventory playbook.yml
+              ansible-playbook playbook.yml -i inventory
 
 
 # Invoke jobs via workflows
