@@ -1,4 +1,4 @@
-WSTemplateFormatVersion: 2022-08-21
+AWSTemplateFormatVersion: 2010-09-09
 Description: Ansible-Resources
 Resources:
   EC2Instance:
