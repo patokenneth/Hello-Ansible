@@ -17,21 +17,36 @@ jobs:
   #               --template-file template.yml \
   #               --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5} \
   #               --region us-east-1
-  configure_infrastructure:
+  # configure_infrastructure:
+  #     docker:
+  #       - image: python:3.7-alpine3.11
+  #     steps:
+  #       - checkout
+  #       - add_ssh_keys:
+  #           fingerprints: ["a6:ac:9d:a4:01:ff:ca:b7:18:6a:76:3b:d7:28:29:15"]
+  #       - run:
+  #           name: install Ansible
+  #           command: |
+  #             apk add --update ansible
+  #       - run:
+  #           name: configure deployed server
+  #           command: |
+  #             ansible-playbook playbook.yml -i inventory.txt
+  smoke_test:
       docker:
-        - image: python:3.7-alpine3.11
+        - image: alpine:latest
       steps:
-        - checkout
-        - add_ssh_keys:
-            fingerprints: ["a6:ac:9d:a4:01:ff:ca:b7:18:6a:76:3b:d7:28:29:15"]
+        - run: apk add --update curl
         - run:
-            name: install Ansible
+            name: smoke_test
             command: |
-              apk add --update ansible
-        - run:
-            name: configure deployed server
-            command: |
-              ansible-playbook playbook.yml -i inventory.txt
+              URL="http://44.202.66.86"
+              if curl -s --head ${URL}
+              then
+                return 0
+              else
+                return 1
+              fi
 
 
 # Invoke jobs via workflows
@@ -39,4 +54,4 @@ jobs:
 workflows:
   cloud-resource-workflow:
     jobs:
-      - configure_infrastructure
+      - smoke_test
