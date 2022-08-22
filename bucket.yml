@@ -11,7 +11,7 @@ Resources:
       BucketName: !Sub "${MyBucketName}"
       AccessControl: PublicRead
       WebsiteConfiguration:
-        IndexDocument: index.html
+        IndexDocument: newindex.html
         ErrorDocument: error.html
   WebsiteBucketPolicy:
     Type: AWS::S3::BucketPolicy
